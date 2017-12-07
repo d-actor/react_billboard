@@ -1,18 +1,63 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ChartForm from './components/ChartForm';
+import ChartList from './components/ChartList';
 
 class App extends Component {
+  state = { charts: [] }
+
+  componentDidMount() {
+    fetch('/api/charts')
+      .then( res => res.json() )
+      .then( charts => this.setState({ charts }) )
+  }
+
+  createChart = (name) => {
+    const chart = { name }
+    fetch ('/api/charts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(chart)
+    }).then( res => res.json() )
+      .then( chart => {
+        const { charts } = this.state;
+        this.setState({ charts: [...charts, chart] })
+      })
+  }
+
+  updateChart = (id) => {
+    fetch(`/api/charts/${id}`, { method: 'PUT' })
+      .then( res => res.json() )
+      .then( chart => {
+        let charts = this.state.charts.map( c => {
+          if (c.id === id )
+            return chart;
+          return c;
+        });
+        this.setState({ charts });
+      })
+  }
+
+  deleteChart = (id) => {
+    fetch(`/api/charts/${id}`, { method: 'DELETE' })
+      .then( () => {
+        const { charts } = this.state;
+        this.setState({ charts: charts.filer( c => c.id !== id ) })
+      })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="container center">
+        <h1>Charts</h1>
+        <ChartForm addChart={this.createChart} />
+        <ChartList
+          charts={this.state.charts}
+          updateChart={this.updateChart}
+          deleteChart={this.deleteChart}
+        />
       </div>
     );
   }
