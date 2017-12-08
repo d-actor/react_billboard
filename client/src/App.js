@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChartForm from './components/ChartForm';
 import ChartList from './components/ChartList';
+import SongList from './components/SongList';
 
 class App extends Component {
   state = { charts: [] }
@@ -58,6 +59,7 @@ class App extends Component {
           updateChart={this.updateChart}
           deleteChart={this.deleteChart}
         />
+        <SongList />
       </div>
     );
   }

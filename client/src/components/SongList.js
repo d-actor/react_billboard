@@ -1,7 +1,8 @@
 import React from 'react';
+import Chart from './Chart';
 import Song from './Song';
 
-createSong = (title) => {
+const createSong = (title) => {
   const song = { title }
   fetch ('/api/songs', {
     method: 'POST',
@@ -9,7 +10,7 @@ createSong = (title) => {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     },
-    body: JSON.stringify(chart)
+    body: JSON.stringify(song)
   }).then( res => res.json() )
     .then( song => {
       const { songs } = this.state;
@@ -17,20 +18,20 @@ createSong = (title) => {
     })
 }
 
-updateChart = (id) => {
-  fetch(`/api/charts/${id}`, { method: 'PUT' })
+const updateSong = (id) => {
+  fetch(`/api/songs/${id}`, { method: 'PUT' })
     .then( res => res.json() )
-    .then( chart => {
+    .then( song => {
       let songs = this.state.songs.map( s => {
         if (s.id === id )
-          return song;
+          return songs;
         return s;
       });
       this.setState({ songs });
     })
 }
 
-deleteSong = (id) => {
+const deleteSong = (id) => {
   fetch(`/api/songs/${id}`, { method: 'DELETE' })
     .then( () => {
       const { songs } = this.state;
@@ -40,13 +41,14 @@ deleteSong = (id) => {
 
 const SongList = ({ songs, updateSong, deleteSong, createSong }) => (
   <div className="row">
-      { songs.map( song =>
+
+      { songs.map( songs =>
           <Song
-            key={song.id}
-            {...song}
+            key={songs.id}
+            {...songs}
             updateSong={updateSong}
             createSong={createSong}
-            deleteChart={deleteChart}
+            deleteSong={deleteSong}
           />
       )
     }

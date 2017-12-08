@@ -34,7 +34,6 @@ class SongForm extends React.Component {
       </form>
     )
   }
-
-
-
 }
+
+export default SongForm;
