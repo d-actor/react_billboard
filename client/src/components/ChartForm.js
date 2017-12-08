@@ -1,7 +1,7 @@
 import React from 'react';
 
 class ChartForm extends React.Component {
-  state = { name: '' }
+  state = { name: '',  }
 
   handleChange = (e) => {
     this.setState({ name: e.target.value})
