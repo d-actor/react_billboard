@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Chart = ({ id, name }) => {
-  <div className="col s12">
+const Chart = ({ id, name }) => (
+  <div>
     { name }
   </div>
-}
+)
 
 export default Chart;

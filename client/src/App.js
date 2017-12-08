@@ -44,7 +44,7 @@ class App extends Component {
     fetch(`/api/charts/${id}`, { method: 'DELETE' })
       .then( () => {
         const { charts } = this.state;
-        this.setState({ charts: charts.filer( c => c.id !== id ) })
+        this.setState({ charts: charts.filter( c => c.id !== id ) })
       })
   }
 
