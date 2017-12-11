@@ -52,16 +52,18 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container center">
-        <h1>Charts</h1>
-        <ChartForm addChart={this.createChart} />
-        <ChartList
-          charts={this.state.charts}
-          updateChart={this.updateChart}
-          deleteChart={this.deleteChart}
-        />
-        <SongList />
-      </div>
+      <body className="black white-text">
+        <div className="container center">
+          <h1>Charts</h1>
+          <ChartForm addChart={this.createChart} />
+          <ChartList
+            charts={this.state.charts}
+            updateChart={this.updateChart}
+            deleteChart={this.deleteChart}
+          />
+          <SongList />
+        </div>
+      </body>
     );
   }
 }

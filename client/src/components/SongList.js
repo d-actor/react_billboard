@@ -27,9 +27,9 @@ class SongList extends Component {
     return(
       <div>
       <h1>Songs</h1>
-        <li>
+        <ul>
           { this.displaySongs() }
-        </li>
+        </ul>
       </div>
     )
   }

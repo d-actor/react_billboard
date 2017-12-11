@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
-const Song = ({ chart_id, title, artist }) => (
+class Song extends Component {
 
-  <div>
-    { title } - { artist }
-  </div>
-)
+  state = { song: { title: '', artist: '' }}
+
+  componentDidMount() {
+    axios.get('/api/songs')
+      .then( res => {
+        this.setState({ songs: res.data })
+        console.log(res.data)
+      })
+      .catch( res => {
+        console.log(res.data);
+      });
+  }
+
+  render() {
+    return(
+      <li>
+        { this.title } - { this.artist }
+      </li>
+    )
+  }
+
+}
 
 export default Song;
