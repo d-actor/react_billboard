@@ -1,58 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 import Chart from './Chart';
 import Song from './Song';
 
-const createSong = (title) => {
-  const song = { title }
-  fetch ('/api/songs', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(song)
-  }).then( res => res.json() )
-    .then( song => {
-      const { songs } = this.state;
-      this.setState({ songs: [...songs, song] })
-    })
-}
+class SongList extends Component {
+  state = { songs: [] }
 
-const updateSong = (id) => {
-  fetch(`/api/songs/${id}`, { method: 'PUT' })
-    .then( res => res.json() )
-    .then( song => {
-      let songs = this.state.songs.map( s => {
-        if (s.id === id )
-          return songs;
-        return s;
+  componentDidMount() {
+    axios.get('/api/songs')
+      .then( res => {
+        this.setState({ songs: res.data })
+      })
+      .catch( res => {
+        console.log(res.data);
       });
-      this.setState({ songs });
-    })
+  }
+
+  displaySongs = () => {
+    return this.state.songs.map ( song => {
+      return(<Song key={song.id} song={song} />);
+    });
+  }
+
+  render() {
+    return(
+      <div>
+      <h1>Songs</h1>
+        <li>
+          { this.displaySongs() }
+        </li>
+      </div>
+    )
+  }
+
 }
-
-const deleteSong = (id) => {
-  fetch(`/api/songs/${id}`, { method: 'DELETE' })
-    .then( () => {
-      const { songs } = this.state;
-      this.setState({ songs: songs.filter( s => s.id !== id ) })
-    })
-}
-
-const SongList = ({ songs, updateSong, deleteSong, createSong }) => (
-  <div className="row">
-
-      { songs.map( songs =>
-          <Song
-            key={songs.id}
-            {...songs}
-            updateSong={updateSong}
-            createSong={createSong}
-            deleteSong={deleteSong}
-          />
-      )
-    }
-  </div>
-)
 
 export default SongList;
