@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Song = ({ id, title }) => (
+const Song = ({ chart_id, title, artist }) => (
+
   <div>
-    { title }
+    { title } - { artist }
   </div>
 )
 

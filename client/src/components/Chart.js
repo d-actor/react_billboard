@@ -13,6 +13,7 @@ const Chart = ({ id, name, updateChart, deleteChart }) => (
         { name }
       </div>
     </div>
+    <button onClick={updateChart}>Edit</button>
     <div
       style={styles.pointer}
       className="col m2"

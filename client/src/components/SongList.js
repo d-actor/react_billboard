@@ -10,6 +10,7 @@ class SongList extends Component {
     axios.get('/api/songs')
       .then( res => {
         this.setState({ songs: res.data })
+        console.log(res.data)
       })
       .catch( res => {
         console.log(res.data);
